@@ -1,0 +1,17 @@
+{
+  "test-corp": {
+    "id": "test-corp",
+    "name": "Test Corp",
+    "email": "billing@testcorp.com",
+    "tier": "business",
+    "registered_at": "2026-06-30T03:42:21.052154",
+    "nodes": [],
+    "monthly_usage": {},
+    "payment_status": "active",
+    "enabled_skills": [
+      "network-monitoring",
+      "multi-agent-consulting",
+      "compatibility-layer"
+    ]
+  }
+}

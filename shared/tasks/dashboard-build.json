@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "task_id": "dashboard-build",
+  "title": "Swarm Node Dashboard — Full Build",
+  "description": "Build a self-contained single-page web dashboard for swarm node monitoring and control. Includes real-time agent status, voice chat, task registry viewer, knowledge browser, and live log streaming. All files delivered to /home/jimmy/teamwork_projects/xbox_ai_agent/interface/.",
+  "status": "pending",
+  "assigned_to": ["owl", "antigravity", "chat-node", "xbox-hermes"],
+  "created": "2026-06-26T13:00:00Z",
+  "priority": "high",
+  "deliverables": [],
+  "subtasks": [
+    {
+      "id": "owl-orchestration",
+      "agent": "owl",
+      "title": "OWL — Project Integration & Orchestration",
+      "description": "Coordinate all four agents, ensure consistent integration, and assemble the final dashboard deliverables.",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "owl-1",
+          "title": "Coordinate task kickoff and agent communication",
+          "description": "Distribute dashboard-build.json to all agents, synchronize dependencies, and establish delivery timeline."
+        },
+        {
+          "id": "owl-2",
+          "title": "Register all four agents in registry.json",
+          "description": "Update /home/jimmy/swarm_node/shared/tasks/registry.json registered_agents array to include chat-node and xbox-hermes alongside owl and antigravity."
+        },
+        {
+          "id": "owl-3",
+          "title": "Review and merge each agent's deliverables",
+          "description": "Validate that dashboard.html CSS/JS matches spec, dashboard_server.py implements all REST+WebSocket endpoints, WebSocket bridge works, data pipelines are correct."
+        },
+        {
+          "id": "owl-4",
+          "title": "Integration testing and smoke test",
+          "description": "Run dashboard_server.py, open in browser, verify all panels load, test voice chat start/stop, test log streaming, verify mobile responsive layout."
+        }
+      ]
+    },
+    {
+      "id": "antigravity-frontend",
+      "agent": "antigravity",
+      "title": "Antigravity Architect — Frontend Design & Styling",
+      "description": "Own the visual design: create the complete dashboard.html with embedded CSS and all visual/UX elements per the DASHBOARD_SPEC.",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "antigravity-1",
+          "title": "Create dashboard.html structure and CSS design system",
+          "description": "Implement the full HTML5 structure (header, agent panel, voice panel, task panel, knowledge panel, log panel). Embed CSS with all custom properties from the color scheme (dark theme 'Swarm Teal'), typography (JetBrains Mono + system fonts), responsive grid layouts (desktop 3-col, tablet 2-col, mobile stack), and animations (pulse, fadeIn). File: /home/jimmy/teamwork_projects/xbox_ai_agent/interface/dashboard.html"
+        },
+        {
+          "id": "antigravity-2",
+          "title": "Implement Agent Status panel styling and layout",
+          "description": "Style agent cards with status dots (online/offline/active), pulse animation for active, name, role, current task, last activity timestamp. Include CSS for linked task assignment display. Responsive: compact cards on mobile."
+        },
+        {
+          "id": "antigravity-3",
+          "title": "Implement Voice Chat panel UI",
+          "description": "Large teal start/stop button (120x48px), animated volume bar, scrollable conversation history with agent avatars, text input with send button. Style for idle/connecting/active states."
+        },
+        {
+          "id": "antigravity-4",
+          "title": "Implement Task Registry, Knowledge Browser, and Log Panel styling",
+          "description": "Style task cards with priority badges (high=red, medium=amber, low=gray), expandable progress logs, deliverable checkboxes. Style knowledge file tree with breadcrumb navigation. Style log panel with color-coded agent names, auto-scroll toggle, filter controls."
+        }
+      ]
+    },
+    {
+      "id": "chat-node-realtime",
+      "agent": "chat-node",
+      "title": "Chat Node — Voice Chat & Real-Time Features",
+      "description": "Own all real-time interaction logic: WebSocket handling, voice chat state machine, log streaming, and the JavaScript event system.",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "chat-node-1",
+          "title": "Implement WebSocket client with auto-reconnect",
+          "description": "Write the full WebSocket connection manager in dashboard.html JS: connect to ws://localhost:8765/ws, exponential backoff reconnect (1s→2s→4s→8s max), channel-based message routing (voice, logs, agents, tasks), connection status indicator in header."
+        },
+        {
+          "id": "chat-node-2",
+          "title": "Implement voice chat state machine and UI logic",
+          "description": "Build voice chat JS: idle→connecting→active→idle state transitions, toggleVoiceChat(), sendVoiceMessage(text), renderConversationMessage(), volume indicator updates, keyboard shortcut (Space) to start/stop. Include text input fallback."
+        },
+        {
+          "id": "chat-node-3",
+          "title": "Implement real-time log streaming and filtering",
+          "description": "Build log panel JS: subscribe to logs channel, renderLog entry with color-coded agent names, auto-scroll with pause toggle, filter by agent dropdown, download-as-text feature, virtual scrolling buffer (200 entries max), debounced rendering (100ms)."
+        },
+        {
+          "id": "chat-node-4",
+          "title": "Implement polling fallback and keyboard shortcuts",
+          "description": "Build REST polling fallback for agents (5s) and tasks (10s) when WebSocket unavailable. Implement keyboard shortcuts: Ctrl+K (knowledge search), Ctrl+L (log panel toggle). Ensure graceful degradation if WS disconnects."
+        }
+      ]
+    },
+    {
+      "id": "xbox-hermes-backend",
+      "agent": "xbox-hermes",
+      "title": "Xbox Hermes — Data Layer & Backend Server",
+      "description": "Own the server: create dashboard_server.py with all HTTP API endpoints, WebSocket bridge, file watching, and data access layer.",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "xbox-hermes-1",
+          "title": "Create dashboard_server.py with HTTP server and REST API",
+          "description": "Implement Python HTTP server (stdlib + websockets package) serving dashboard.html at /, all REST endpoints: GET /api/agents, GET /api/tasks, GET /api/knowledge, GET /api/knowledge/<name>, GET /api/logs, GET /api/voice/history, POST /api/voice/start, POST /api/voice/stop, POST /api/voice/send. Read from filesystem: registry.json, knowledge dir, logs dir. Add CORS headers and path traversal prevention. File: /home/jimmy/teamwork_projects/xbox_ai_agent/interface/dashboard_server.py"
+        },
+        {
+          "id": "xbox-hermes-2",
+          "title": "Implement WebSocket server and real-time broadcast bridge",
+          "description": "Run WebSocket server alongside HTTP on port 8765. Handle incoming channel messages (voice: start/stop/send, logs: subscribe/unsubscribe). Broadcast to connected clients. Watch shared/logs/ and shared/tasks/registry.json for changes and push updates. Agent heartbeat detection from task assignments and log activity."
+        },
+        {
+          "id": "xbox-hermes-3",
+          "title": "Implement data access layer with file watching",
+          "description": "Build filesystem watcher for logs directory and registry.json using watchdog or polling mtime. Parse and serve log entries in the JSON format specified. Implement knowledge file listing with metadata (size, modified date). Path traversal prevention for all file reads."
+        },
+        {
+          "id": "xbox-hermes-4",
+          "title": "Implement voice chat session management",
+          "description": "Build voice session handler: generate session IDs, manage voice state, store/serve conversation history, connect to existing hermes_voice_chat.py pipeline, handle CSRF protection via same-origin check. Graceful handling when voice pipeline unavailable."
+        },
+        {
+          "id": "xbox-hermes-5",
+          "title": "Add server startup, health check, and graceful shutdown",
+          "description": "Implement CLI startup (python3 dashboard_server.py --port 8080), bind to 127.0.0.1, handle SIGTERM gracefully, log startup banner with endpoint URLs, validate all routes respond on startup with health check."
+        }
+      ]
+    },
+    {
+      "id": "owl-integration",
+      "agent": "owl",
+      "title": "OWL — Final Integration & Assembly",
+      "description": "Assemble all agent deliverables into a working dashboard, run end-to-end verification, and hand off the complete build.",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "integration-1",
+          "title": "Collect and verify all agent deliverables",
+          "description": "Confirm dashboard.html exists with full CSS+JS, confirm dashboard_server.py exists with all endpoints. Verify file paths match spec at /home/jimmy/teamwork_projects/xbox_ai_agent/interface/."
+        },
+        {
+          "id": "integration-2",
+          "title": "End-to-end integration test",
+          "description": "Start dashboard_server.py, open browser, verify all 5 panels load with data, test voice chat flow, test log streaming, test knowledge file viewing, test responsive layout at mobile/tablet/desktop breakpoints."
+        },
+        {
+          "id": "integration-3",
+          "title": "Update registry.json with dashboard-build task completion",
+          "description": "Move dashboard-build task to completed_tasks in registry.json, add deliverables entries for dashboard.html and dashboard_server.py, update last_updated timestamp."
+        }
+      ]
+    }
+  ],
+  "delivery_instructions": {
+    "target_directory": "/home/jimmy/teamwork_projects/xbox_ai_agent/interface/",
+    "files": [
+      {
+        "filename": "dashboard.html",
+        "description": "Single-page HTML/CSS/JS dashboard application — all 6 panels with responsive layout, dark theme, embedded styles and scripts.",
+        "owner": "antigravity (structure+CSS), chat-node (JS interactions)"
+      },
+      {
+        "filename": "dashboard_server.py",
+        "description": "Python HTTP+WebSocket server providing REST API endpoints, file watching, voice session management, and static file serving.",
+        "owner": "xbox-hermes"
+      }
+    ],
+    "dependencies": {
+      "dashboard_server.py": ["websockets (pip)"],
+      "dashboard.html": ["Python 3.8+ stdlib server"]
+    },
+    "startup_command": "python3 /home/jimmy/teamwork_projects/xbox_ai_agent/interface/dashboard_server.py --port 8080",
+    "access_url": "http://localhost:8080"
+  },
+  "progress_log": [
+    {
+      "timestamp": "2026-06-26T13:00:00Z",
+      "agent": "owl",
+      "action": "Created dashboard-build.json task breakdown with 4 agent assignments + 1 integration task. Total: 18 subtasks across 5 groups."
+    }
+  ]
+}
