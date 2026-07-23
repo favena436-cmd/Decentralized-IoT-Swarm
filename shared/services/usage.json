@@ -1,0 +1,26 @@
+{
+  "test-corp": {
+    "2026-06": {
+      "node-1": [
+        {
+          "task_type": "chat",
+          "duration_seconds": 2.5,
+          "success": true,
+          "timestamp": "2026-06-30T03:42:21.119923"
+        },
+        {
+          "task_type": "voice_ai",
+          "duration_seconds": 15.3,
+          "success": true,
+          "timestamp": "2026-06-30T03:42:21.120111"
+        },
+        {
+          "task_type": "automation",
+          "duration_seconds": 45.0,
+          "success": true,
+          "timestamp": "2026-06-30T03:42:21.120458"
+        }
+      ]
+    }
+  }
+}

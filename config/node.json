@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "role": "chat-node",
+  "name": "Chat Node \u2014 User Interface / Communication",
+  "hostname": "jimmy-HP-Laptop-15-bs0xx",
+  "platform": {
+    "os": "Linux",
+    "os_version": "#35~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue May 26 19:30:42 UTC 2",
+    "architecture": "x86_64",
+    "platform": "linux",
+    "is_raspberry_pi": false
+  },
+  "network": {
+    "orchestrator_host": "127.0.0.1",
+    "orchestrator_port": 9997,
+    "bind_host": "0.0.0.0",
+    "bind_port": 0
+  },
+  "paths": {
+    "node_dir": "/home/jimmy/swarm_node",
+    "shared_dir": "/home/jimmy/swarm_node/shared",
+    "config_dir": "/home/jimmy/swarm_node/config",
+    "logs_dir": "/home/jimmy/swarm_node/logs",
+    "workspace_dir": "/home/jimmy/swarm_node/workspace"
+  },
+  "features": {
+    "stt": true,
+    "tts": true,
+    "rtu_collector": false,
+    "task_router": false,
+    "hardware_io": false
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "/home/jimmy/swarm_node/logs/node.log",
+    "max_size_mb": 10,
+    "backup_count": 3
+  },
+  "provisioned_at": "2026-06-30T03:02:31-07:00"
+}

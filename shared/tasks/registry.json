@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "active_tasks": [
+    {
+      "id": "voice-chat-native-stt-tts",
+      "title": "Native STT/TS for all swarm agents",
+      "description": "Build and integrate native speech-to-text and text-to-text capabilities for all swarm agents (OWL/Hermes, Antigravity, Chat Node, Xbox Hermes). Each agent should be able to transcribe audio and synthesize speech natively.",
+      "status": "in_progress",
+      "assigned_to": ["owl", "antigravity"],
+      "created": "2026-06-26T11:00:00Z",
+      "priority": "high",
+      "deliverables": [
+        "OWL: hermes_voice_chat.py with VAD + streaming STT/TTS (done at /home/jimmy/hermes_voice_chat.py)",
+        "Antigravity: Review chat_agent.py key loading fix and create collaboration workspace",
+        "Shared: knowledge/voice-pipeline.md documenting the architecture"
+      ],
+      "progress_log": [
+        {
+          "timestamp": "2026-06-26T12:00:00Z",
+          "agent": "owl",
+          "action": "Fixed hermes_voice_chat.py: (1) Added ALSA stderr suppression via _run_silent() helper and contextlib.redirect_stderr during PyAudio init. (2) Fixed streaming LLM parser — Gemini streamGenerateContent returns JSON array [{...}] not SSE data: lines, added buffer-based JSON array parsing with SSE fallback. (3) Improved STT empty response handling — now treats [no speech], (silence), none, n/a, etc. as empty. (4) Added error handling for LLM HTTP errors with raise_for_status(). Verified streaming LLM works end-to-end with API key."
+        }
+      ]
+    }
+  ],
+  "completed_tasks": [],
+  "registered_agents": [
+    {"name": "owl", "role": "Orchestrator / Task Router", "profile": "default"},
+    {"name": "antigravity", "role": "System Designer / Architecture Agent", "profile": "antigravity"}
+  ],
+  "node_status": "active",
+  "last_updated": "2026-06-26T12:00:00Z"
+}
